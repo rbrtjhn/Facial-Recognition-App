@@ -1,5 +1,5 @@
 import os
-os.environ["TF_USE_LEGACY_KERAS"] = "1" 
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
 
 import tkinter as tk
 from tkinter import messagebox
@@ -14,16 +14,26 @@ def start_recognition():
         facedetect = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         
 # Change 0 to 1 to force the external USB webcam!
-        cap = cv2.VideoCapture(1) 
+        cap = cv2.VideoCapture(0) 
         cap.set(3, 640)
         cap.set(4, 480)
         font = cv2.FONT_HERSHEY_COMPLEX
 
         def get_className(classNo):
             if classNo == 0:
-                return "Me"     # Your placeholder
+                return "RJ"
             elif classNo == 1:
-                return "Lights"  # Your placeholder
+                return "DM"
+            elif classNo == 2:
+                return "Russel"
+            elif classNo == 3:
+                return "Jomarc"
+            elif classNo == 4:
+                return "AJ"
+            elif classNo == 5:
+                return "Quimay"
+            elif classNo == 6:
+                return "No Background"
 
         while True:
             success, imgOrignal = cap.read()
@@ -58,8 +68,7 @@ def start_recognition():
                 cv2.rectangle(imgOrignal, (x, y), (x+w, y+h), (0, 255, 0), 2)
                 cv2.rectangle(imgOrignal, (x, y-40), (x+w, y), (0, 255, 0), -2)
                 cv2.putText(imgOrignal, str(get_className(classIndex)), (x, y-10), font, 0.75, (255, 255, 255), 1, cv2.LINE_AA)
-                cv2.putText(imgOrignal, str(round(probabilityValue*100, 2)) + "%", (x, y + h + 30), font, 0.75, (255, 0, 0), 2, cv2.LINE_AA)
-
+                cv2.putText(imgOrignal, str(round(probabilityValue*100, 2)) + "%", (x, y + h + 30), font, 0.75, (255, 255, 255), 2, cv2.LINE_AA)
             cv2.imshow("Facial Recognition Active (Press 'q' to exit)", imgOrignal)
             
             if cv2.waitKey(1) & 0xFF == ord('q'):
